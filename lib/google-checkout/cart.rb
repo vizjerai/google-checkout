@@ -62,8 +62,6 @@ module GoogleCheckout
     # Beware using symbols as values. They may be set as sub-keys instead of values,
     # so use a String or other datatype.
 
-    attr_accessor :merchant_private_data
-
     attr_accessor :edit_cart_url
     attr_accessor :continue_shopping_url
 
@@ -87,7 +85,6 @@ module GoogleCheckout
     # or more items to put inside the cart.
     def initialize(merchant_id, merchant_key, *items)
       super(merchant_id, merchant_key)
-      @merchant_private_data = ''
       @shipping_methods = []
       items.each { |i| add_item i }
     end
@@ -98,6 +95,10 @@ module GoogleCheckout
 
     def contents
       @contents ||= []
+    end
+
+    def merchant_private_data
+      @merchant_private_data ||= ''
     end
 
     def merchant_private_data=(value)
@@ -271,9 +272,9 @@ module GoogleCheckout
               }
             }
           }
-          unless @merchant_private_data.nil? || @merchant_private_data.empty?
+          unless merchant_private_data.empty?
             xml.tag!("merchant-private-data") {
-              xml << @merchant_private_data
+              xml << merchant_private_data
             }
           end
         }

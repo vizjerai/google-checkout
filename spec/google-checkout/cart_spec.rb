@@ -52,6 +52,11 @@ describe GoogleCheckout, "Cart (generic)" do
     it { should == [{:quantity => 1, :currency => 'USD'}.merge(item)] }
   end
 
+  describe '.merchant_private_data' do
+    subject { @cart.merchant_private_data }
+    it { should == '' }
+  end
+
 end
 
 describe GoogleCheckout, "Cart Post" do
