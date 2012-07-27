@@ -78,7 +78,12 @@ describe GoogleCheckout, "Charge Order" do
     error_response.should_receive(:body).and_return(read_xml_fixture('responses/error'))
     net_http.should_receive(:request).and_return(error_response)
 
-    lambda { @order.post }.should raise_error(GoogleCheckout::APIError)
+    response = @order.post
+    response.should be_kind_of(GoogleCheckout::Error)
+    response.should be_error
+    response.serial_number.should == 'bea6bc1b-e1e2-44fe-80ff-0180e33a2614'
+    response.error_message.should == 'Bad username and/or password for API Access.'
+    response.message.should == 'Bad username and/or password for API Access.'
   end
 
   it "should post request to Google and return error charged already" do
@@ -91,6 +96,10 @@ describe GoogleCheckout, "Charge Order" do
     net_http.should_receive(:request).and_return(error_response)
 
     response = @order.post
+    response.should be_kind_of(GoogleCheckout::Error)
+    response.should be_error
+    response.serial_number.should == 'bea6bc1b-e1e2-44fe-80ff-0180e33a2614'
+    response.error_message.should == 'You cannot charge an order that is already completely charged'
     response.message.should == 'You cannot charge an order that is already completely charged'
   end
 
