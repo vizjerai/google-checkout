@@ -222,7 +222,7 @@ module GoogleCheckout
       }) do
         xml.tag!("amount", @amount, {:currency => @currency})
         xml.tag!("reason", @reason)
-        xml.tag!("comment", @comment) unless @comment.blank?
+        xml.tag!("comment", @comment) unless @comment.nil? || @comment.empty?
       end
       @xml
     end

@@ -268,7 +268,7 @@ module GoogleCheckout
               }
             }
           }
-          unless @merchant_private_data.blank?
+          unless @merchant_private_data.nil? || @merchant_private_data.empty?
             xml.tag!("merchant-private-data") {
               xml << @merchant_private_data
             }
@@ -290,7 +290,8 @@ module GoogleCheckout
             xml.tag!('parameterized-urls') {
               @parameterized_urls.each do |param_url|
                 xml.tag!('parameterized-url', :url => param_url[:url]) {
-                  next if param_url[:parameters].blank?
+                  next if param_url[:parameters].nil?
+                  next if param_url[:parameters].empty?
                   xml.tag!('parameters') {
                     param_url[:parameters].each do |parameter|
                       xml.tag!('url-parameter', :name => parameter[:name], :type => parameter[:type]) {}
@@ -298,7 +299,7 @@ module GoogleCheckout
                   }
                 }
               end
-            } unless @parameterized_urls.blank?
+            } unless @parameterized_urls.nil? || @parameterized_urls.empty?
 
             xml.tag!('shipping-methods') {
               @shipping_methods.each do |shipping_method|
