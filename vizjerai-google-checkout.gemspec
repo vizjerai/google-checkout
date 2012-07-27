@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'activesupport', '>= 2.3.0'
   gem.add_dependency 'money', '>= 2.3.0'
   gem.add_dependency 'nokogiri'
+  gem.add_dependency 'builder'
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'rubygems-bundler'
