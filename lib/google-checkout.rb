@@ -7,6 +7,8 @@
 $: << File.dirname(__FILE__)
 $: << File.dirname(__FILE__) + "/vendor/ruby-hmac/lib"
 
+require 'google-checkout/version'
+
 require 'rubygems'
 require 'active_support'
 
