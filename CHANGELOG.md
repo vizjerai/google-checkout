@@ -1,4 +1,9 @@
-== 0.2.0 / 2007-08-14
+## Unreleased
+
+### Bug Fix
+ - Changed Command.post to always return a Notification instead of raising an error.
+
+## 0.2.0 / 2007-08-14
 
 * Significant rewrite!
   * Added rSpec specifications.
