@@ -22,5 +22,5 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'rubygems-bundler'
-  gem.add_development_dependency 'rspec', '~> 1.3.0'
+  gem.add_development_dependency 'rspec'
 end

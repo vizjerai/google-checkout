@@ -1,12 +1,4 @@
-require File.dirname(__FILE__) + "/../spec_helper"
-
-describe "basic command", :shared => true do
-
-  it "should include XML header" do
-    @order.to_xml.should match(/^<\?xml version=\"1\.0\" encoding=\"UTF-8\"\?>/)
-  end
-
-end
+require "spec_helper"
 
 describe GoogleCheckout, "Command class" do
 
