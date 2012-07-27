@@ -1,4 +1,4 @@
-## Unreleased
+## 0.3.0 / 2012-07-27
 
 ### Bug Fix
  - Changed Command.post to always return a Notification instead of raising an error.
