@@ -61,6 +61,7 @@ module GoogleCheckout
     #
     # Beware using symbols as values. They may be set as sub-keys instead of values,
     # so use a String or other datatype.
+    attr_reader :contents
 
     attr_accessor :merchant_private_data
 

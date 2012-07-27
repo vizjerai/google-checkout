@@ -1,3 +1,8 @@
+## Unreleased
+
+### New Features
+ - Allow cart contents to be read.
+
 ## 0.3.0 / 2012-07-27
 
 ### Bug Fix
