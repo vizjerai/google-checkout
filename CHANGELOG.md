@@ -1,4 +1,4 @@
-## Unreleased
+## 0.4.0 / 2012-07-27
 
 ### New Features
  - Allow cart contents to be read.
