@@ -4,11 +4,6 @@
 #  https://sandbox.google.com/checkout/cws/v2/Merchant/MERCHANT_ID/merchantCheckout
 #  https://checkout.google.com/cws/v2/Merchant/MERCHANT_ID/merchantCheckout
 
-$: << File.dirname(__FILE__)
-$: << File.dirname(__FILE__) + "/vendor/ruby-hmac/lib"
-
-require 'google-checkout/version'
-
 require 'active_support'
 
 require 'openssl'
