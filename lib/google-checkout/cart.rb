@@ -68,7 +68,7 @@ module GoogleCheckout
     attr_accessor :merchant_calculations_url
     attr_writer :parameterized_urls
 
-    attr_accessor :shipping_methods
+    attr_writer :shipping_methods
 
     # The default options for drawing in the button that are filled in when
     # checkout_button or button_url is called.
@@ -85,7 +85,6 @@ module GoogleCheckout
     # or more items to put inside the cart.
     def initialize(merchant_id, merchant_key, *items)
       super(merchant_id, merchant_key)
-      @shipping_methods = []
       items.each { |i| add_item i }
     end
 
@@ -115,6 +114,10 @@ module GoogleCheckout
 
     def parameterized_urls
       @parameterized_urls ||= []
+    end
+
+    def shipping_methods
+      @shipping_methods ||= []
     end
 
     # Number of items in the cart.
@@ -310,7 +313,7 @@ module GoogleCheckout
             } unless parameterized_urls.empty?
 
             xml.tag!('shipping-methods') {
-              @shipping_methods.each do |shipping_method|
+              shipping_methods.each do |shipping_method|
                 xml << shipping_method.to_xml
               end
             }

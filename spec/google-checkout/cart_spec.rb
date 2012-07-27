@@ -68,6 +68,29 @@ describe GoogleCheckout, "Cart (generic)" do
     end
   end
 
+  describe '.shipping_methods' do
+    subject { @cart.shipping_methods }
+    it { should == [] }
+
+    context 'with flat rate' do
+      let(:shipping_method) { GoogleCheckout::Shipping::FlatRate.new('FedEx', 1234) }
+      before { @cart.shipping_methods = [shipping_method] }
+      it { should == [shipping_method] }
+    end
+
+    context 'with merchant calculated' do
+      let(:shipping_method) { GoogleCheckout::Shipping::MerchantCalculated.new('FedEx Ground', 1234) }
+      before { @cart.shipping_methods = [shipping_method] }
+      it { should == [shipping_method] }
+    end
+
+    context 'with pickup' do
+      let(:shipping_method) { GoogleCheckout::Shipping::Pickup.new('Pickup', 1234) }
+      before { @cart.shipping_methods = [shipping_method] }
+      it { should == [shipping_method] }
+    end
+  end
+
 end
 
 describe GoogleCheckout, "Cart Post" do
