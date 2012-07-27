@@ -18,7 +18,7 @@ require 'nokogiri'
 require 'money'
 require 'net/https'
 
-require 'duck_punches/hpricot'
+require 'duck_punches/nokogiri'
 require 'duck_punches/inflector'
 require 'google-checkout/notification'
 require 'google-checkout/merchant_calculation'
