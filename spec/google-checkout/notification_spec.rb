@@ -257,9 +257,6 @@ end
 
 describe GoogleCheckout, "Error Notification" do
   let(:notification) { GoogleCheckout::Notification.parse(read_xml_fixture('responses/error')) }
-  before do
-    @notification = notification
-  end
 
   it "should identify type of notication" do
     notification.should be_kind_of GoogleCheckout::Error
@@ -271,6 +268,23 @@ describe GoogleCheckout, "Error Notification" do
 
   it "should have message" do
     notification.message.should == 'Bad username and/or password for API Access.'
+  end
+
+end
+
+describe GoogleCheckout, 'Api Error Notification' do
+  let(:notification) { GoogleCheckout::ApiError.new 'Unexpected Error' }
+
+  it "should identify type of notication" do
+    notification.should be_kind_of GoogleCheckout::ApiError
+  end
+
+  it "should have error message" do
+    notification.error_message.should == 'Unexpected Error'
+  end
+
+  it "should have message" do
+    notification.message.should == 'Unexpected Error'
   end
 
 end

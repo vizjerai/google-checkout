@@ -353,18 +353,30 @@ module GoogleCheckout
 
   class Error < Notification
 
-    def initialize(doc, options={})
-      @error_message = options[:message]
-      super(doc)
-    end
+    ##
+    # Alias for +_error_message+
 
-    def error_message
-      @error_message || (doc/'error-message').inner_html
+    def message
+      (doc/'error-message').inner_html
     end
-    alias :message :error_message
 
   end
 
   class RequestReceived < Notification; end
+
+  class ApiError < Notification
+    attr_reader :error_message
+
+    def initialize(message='')
+      @error_message = message
+    end
+
+    def error?
+      true
+    end
+
+    alias :message :error_message
+
+  end
 
 end

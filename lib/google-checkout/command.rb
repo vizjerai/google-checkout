@@ -61,9 +61,9 @@ module GoogleCheckout
       when Net::HTTPSuccess, Net::HTTPClientError
         Notification.parse(response.body)
       when Net::HTTPRedirection, Net::HTTPServerError, Net::HTTPInformation
-        Error.new(nil, :message => "Unexpected response code (#{response.class}): #{response.code} - #{response.message}")
+        ApiError.new("Unexpected response code (#{response.class}): #{response.code} - #{response.message}")
       else
-        Error.new(nil, :message => "Unknown response code: #{response.code} - #{response.message}")
+        ApiError.new("Unknown response code: #{response.code} - #{response.message}")
       end
     end
 

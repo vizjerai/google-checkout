@@ -114,7 +114,7 @@ describe GoogleCheckout, "Charge Order" do
 
     it "return error" do
       response = @order.post
-      response.should be_kind_of(GoogleCheckout::Error)
+      response.should be_kind_of(GoogleCheckout::ApiError)
       response.should be_error
       response.serial_number.should be_nil
       response.message.should == 'Unexpected response code (Net::HTTPRedirection): 301 - Redirect'
@@ -132,7 +132,7 @@ describe GoogleCheckout, "Charge Order" do
 
     it "return error" do
       response = @order.post
-      response.should be_kind_of(GoogleCheckout::Error)
+      response.should be_kind_of(GoogleCheckout::ApiError)
       response.should be_error
       response.serial_number.should be_nil
       response.message.should == 'Unknown response code: 600 - Unknown Response'

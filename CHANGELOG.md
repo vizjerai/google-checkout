@@ -3,6 +3,9 @@
 ### New Features
  - Allow cart contents to be read.
 
+### Bug Fix
+ - Fix not knowing if it was a google error or one caused by the gem.
+
 ## 0.3.0 / 2012-07-27
 
 ### Bug Fix
