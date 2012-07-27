@@ -10,6 +10,7 @@ shared_examples_for "basic notification" do
 
   it "should generate acknowledgment XML" do
     @notification.acknowledgment_xml.should match(/notification-acknowledgment/)
+    @notification.acknowledgment_xml.should match(/serial-number="bea6bc1b-e1e2-44fe-80ff-0180e33a2614"/)
   end
 
 end
