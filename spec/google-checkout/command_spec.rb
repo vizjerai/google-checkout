@@ -55,7 +55,7 @@ describe GoogleCheckout, "Charge Order" do
 
   it "should post request to Google successfully" do
     # :null_object means eat all other methods and return self
-    net_http = mock("net_http", { :null_object => true })
+    net_http = double("net_http").as_null_object
     Net::HTTP.should_receive(:new).and_return(net_http)
 
     success_response = Net::HTTPSuccess.new(Net::HTTP.version_1_2, 200, "OK")
@@ -70,7 +70,7 @@ describe GoogleCheckout, "Charge Order" do
 
   it "should post request to Google and return error" do
     # :null_object means eat all other methods and return self
-    net_http = mock("net_http", { :null_object => true })
+    net_http = double("net_http").as_null_object
     Net::HTTP.should_receive(:new).and_return(net_http)
 
     # NOTE HTTP response code is irrelevant here.
@@ -82,7 +82,7 @@ describe GoogleCheckout, "Charge Order" do
   end
 
   it "should post request to Google and return error charged already" do
-    net_http = mock("net_http", { :null_object => true })
+    net_http = double("net_http").as_null_object
     Net::HTTP.should_receive(:new).and_return(net_http)
 
     # NOTE HTTP response code is irrelevant here.

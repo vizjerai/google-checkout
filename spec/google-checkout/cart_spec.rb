@@ -56,7 +56,7 @@ describe GoogleCheckout, "Cart Post" do
 
   it "should post request to Google" do
     # :null_object means eat all other methods and return self
-    net_http = mock("net_http", { :null_object => true })
+    net_http = double("net_http").as_null_object
     Net::HTTP.should_receive(:new).and_return(net_http)
 
     success_response = Net::HTTPSuccess.new(Net::HTTP.version_1_2, 200, "OK")
