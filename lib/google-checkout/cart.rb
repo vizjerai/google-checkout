@@ -66,7 +66,7 @@ module GoogleCheckout
     attr_accessor :continue_shopping_url
 
     attr_accessor :merchant_calculations_url
-    attr_accessor :parameterized_urls
+    attr_writer :parameterized_urls
 
     attr_accessor :shipping_methods
 
@@ -111,6 +111,10 @@ module GoogleCheckout
       elsif value.is_a?(String)
         @merchant_private_data = value
       end
+    end
+
+    def parameterized_urls
+      @parameterized_urls ||= []
     end
 
     # Number of items in the cart.
@@ -292,7 +296,7 @@ module GoogleCheckout
             # TODO tax-tables
 
             xml.tag!('parameterized-urls') {
-              @parameterized_urls.each do |param_url|
+              parameterized_urls.each do |param_url|
                 xml.tag!('parameterized-url', :url => param_url[:url]) {
                   next if param_url[:parameters].nil?
                   next if param_url[:parameters].empty?
@@ -303,7 +307,7 @@ module GoogleCheckout
                   }
                 }
               end
-            } unless @parameterized_urls.nil? || @parameterized_urls.empty?
+            } unless parameterized_urls.empty?
 
             xml.tag!('shipping-methods') {
               @shipping_methods.each do |shipping_method|

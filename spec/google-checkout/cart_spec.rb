@@ -57,6 +57,17 @@ describe GoogleCheckout, "Cart (generic)" do
     it { should == '' }
   end
 
+  describe '.parameterized_urls' do
+    subject { @cart.parameterized_urls }
+    it { should == [] }
+
+    context 'with parameterized urls' do
+      let(:param_urls) { [{:url => 'http://checkout.google.com'}] }
+      before { @cart.parameterized_urls = param_urls }
+      it { should == param_urls }
+    end
+  end
+
 end
 
 describe GoogleCheckout, "Cart Post" do
