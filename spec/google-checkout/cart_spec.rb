@@ -8,25 +8,42 @@ describe GoogleCheckout, "Cart (generic)" do
       :description => "A few screencasts",
       :price => 9.00
     })
-    GoogleCheckout.use_sandbox
   end
 
-  it "should generate proper live buy button_url" do
-    GoogleCheckout.use_production
-    @cart.button_url.should match(%r{http://checkout\.google\.com/buttons/buy\.gif})
+  context 'when using production' do
+    before do
+      GoogleCheckout.use_production
+    end
+
+    it "should generate proper live buy button_url" do
+      @cart.button_url.should match(%r{http://checkout\.google\.com/buttons/buy\.gif})
+    end
+
+    it "should generate proper live checkout button_url" do
+      @cart.button_url(:buy_or_checkout => :checkout).should match(%r{http://checkout\.google\.com/buttons/checkout\.gif})
+    end
+
+    it "should generate proper live checkout button url with https" do
+      @cart.button_url(:buy_or_checkout => :checkout, :https => true).should match(%r{https://checkout\.google\.com/buttons/checkout\.gif})
+    end
   end
 
-  it "should generate proper live checkout button_url" do
-    GoogleCheckout.use_production
-    @cart.button_url(:buy_or_checkout => :checkout).should match(%r{http://checkout\.google\.com/buttons/checkout\.gif})
-  end
+  context 'when using sandbox' do
+    before do
+      GoogleCheckout.use_sandbox
+    end
 
-  it "should generate proper sandbox buy button_url" do
-    @cart.button_url.should match(%r{http://sandbox\.google\.com/checkout/buttons/buy\.gif})
-  end
+    it "should generate proper sandbox buy button_url" do
+      @cart.button_url.should match(%r{http://sandbox\.google\.com/checkout/buttons/buy\.gif})
+    end
 
-  it "should generate proper sandbox checkout button_url" do
-    @cart.button_url(:buy_or_checkout => :checkout).should match(%r{http://sandbox\.google\.com/checkout/buttons/checkout\.gif})
+    it "should generate proper sandbox checkout button_url" do
+      @cart.button_url(:buy_or_checkout => :checkout).should match(%r{http://sandbox\.google\.com/checkout/buttons/checkout\.gif})
+    end
+
+    it "should generate proper sandbox checkout button url with https" do
+      @cart.button_url(:buy_or_checkout => :checkout, :https => true).should match(%r{https://sandbox\.google\.com/checkout/buttons/checkout\.gif})
+    end
   end
 
   it "should generate checkout button" do
