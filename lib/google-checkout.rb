@@ -60,6 +60,4 @@ module GoogleCheckout
     @@live_system
   end
 
-  class APIError < Exception; end
-
 end

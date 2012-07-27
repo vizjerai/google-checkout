@@ -20,7 +20,9 @@ module GoogleCheckout
   class Notification
 
     # The Nokogiri XML document received from Google.
-    attr_accessor :doc
+    def doc
+      @doc || Nokogiri::XML::Builder.new
+    end
 
     ##
     # The entry point for notifications.
@@ -351,12 +353,15 @@ module GoogleCheckout
 
   class Error < Notification
 
-    ##
-    # Alias for +error_message+
-
-    def message
-      (@doc/'error-message').inner_html
+    def initialize(doc, options={})
+      @error_message = options[:message]
+      super(doc)
     end
+
+    def error_message
+      @error_message || (@doc/'error-message').inner_html
+    end
+    alias :message :error_message
 
   end
 

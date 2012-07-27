@@ -59,11 +59,11 @@ module GoogleCheckout
       #      is from the server.
       case response
       when Net::HTTPSuccess, Net::HTTPClientError
-        return Notification.parse(response.body)
+        Notification.parse(response.body)
       when Net::HTTPRedirection, Net::HTTPServerError, Net::HTTPInformation
-        raise "Unexpected response code (#{response.class}): #{response.code} - #{response.message}"
+        Error.new(nil, :message => "Unexpected response code (#{response.class}): #{response.code} - #{response.message}")
       else
-        raise "Unknown response code: #{response.code} - #{response.message}"
+        Error.new(nil, :message => "Unknown response code: #{response.code} - #{response.message}")
       end
     end
 

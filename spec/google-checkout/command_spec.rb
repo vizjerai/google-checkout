@@ -103,6 +103,42 @@ describe GoogleCheckout, "Charge Order" do
     response.message.should == 'You cannot charge an order that is already completely charged'
   end
 
+  context 'with Net::HTTPRedirection response' do
+    before do
+      net_http = double('net_http').as_null_object
+      Net::HTTP.should_receive(:new).and_return(net_http)
+
+      response = Net::HTTPRedirection.new(Net::HTTP.version_1_2, 301, "Redirect")
+      net_http.should_receive(:request).and_return(response)
+    end
+
+    it "return error" do
+      response = @order.post
+      response.should be_kind_of(GoogleCheckout::Error)
+      response.should be_error
+      response.serial_number.should be_nil
+      response.message.should == 'Unexpected response code (Net::HTTPRedirection): 301 - Redirect'
+    end
+  end
+
+  context 'with HTTPUnknownResponse response' do
+    before do
+      net_http = double('net_http').as_null_object
+      Net::HTTP.should_receive(:new).and_return(net_http)
+
+      response = Net::HTTPUnknownResponse.new(Net::HTTP.version_1_2, 600, "Unknown Response")
+      net_http.should_receive(:request).and_return(response)
+    end
+
+    it "return error" do
+      response = @order.post
+      response.should be_kind_of(GoogleCheckout::Error)
+      response.should be_error
+      response.serial_number.should be_nil
+      response.message.should == 'Unknown response code: 600 - Unknown Response'
+    end
+  end
+
 end
 
 describe GoogleCheckout, "Add Tracking Data" do
