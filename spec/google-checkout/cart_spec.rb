@@ -1,13 +1,10 @@
 require "spec_helper"
 
 describe GoogleCheckout, "Cart (generic)" do
+  let(:item) { {:name => "PeepCode Screencast", :description => "A few screencasts", :price => 9.00} }
 
-  before(:each) do
-    @cart = GoogleCheckout::Cart.new("my_id", "my_key", {
-      :name => "PeepCode Screencast",
-      :description => "A few screencasts",
-      :price => 9.00
-    })
+  before do
+    @cart = GoogleCheckout::Cart.new("my_id", "my_key", item)
   end
 
   context 'when using production' do
@@ -48,6 +45,11 @@ describe GoogleCheckout, "Cart (generic)" do
 
   it "should generate checkout button" do
     @cart.checkout_button.should match(/buy\.gif/)
+  end
+
+  describe '.contents' do
+    subject { @cart.contents }
+    it { should == [{:quantity => 1, :currency => 'USD'}.merge(item)] }
   end
 
 end

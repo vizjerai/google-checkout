@@ -61,7 +61,6 @@ module GoogleCheckout
     #
     # Beware using symbols as values. They may be set as sub-keys instead of values,
     # so use a String or other datatype.
-    attr_reader :contents
 
     attr_accessor :merchant_private_data
 
@@ -88,14 +87,17 @@ module GoogleCheckout
     # or more items to put inside the cart.
     def initialize(merchant_id, merchant_key, *items)
       super(merchant_id, merchant_key)
-      @contents = []
       @merchant_private_data = ''
       @shipping_methods = []
       items.each { |i| add_item i }
     end
 
     def empty?
-      @contents.empty?
+      contents.empty?
+    end
+
+    def contents
+      @contents ||= []
     end
 
     def merchant_private_data=(value)
@@ -112,7 +114,7 @@ module GoogleCheckout
 
     # Number of items in the cart.
     def size
-      @contents.size
+      contents.size
     end
 
     def submit_domain
@@ -170,7 +172,7 @@ module GoogleCheckout
         "Required keys missing: #{missing_keys.inspect}"
       end
 
-      @contents << { :quantity => 1, :currency => 'USD' }.merge(item)
+      contents << { :quantity => 1, :currency => 'USD' }.merge(item)
       item
     end
 
@@ -187,7 +189,7 @@ module GoogleCheckout
       @xml = xml.tag!('checkout-shopping-cart', :xmlns => "http://checkout.google.com/schema/2") {
         xml.tag!("shopping-cart") {
           xml.items {
-            @contents.each { |item|
+            contents.each { |item|
               xml.item {
                 if item.key?(:item_id)
                   xml.tag!('merchant-item-id', item[:item_id])
@@ -369,7 +371,7 @@ module GoogleCheckout
 
     def button_url(opts = {})
       opts = DefaultButtonOpts.merge opts
-      opts[:buy_or_checkout] ||= @contents.size > 1 ? :checkout : :buy_now
+      opts[:buy_or_checkout] ||= contents.size > 1 ? :checkout : :buy_now
       opts.merge! ButtonSizes[opts[:buy_or_checkout]][opts[:size]]
       bname = opts[:buy_or_checkout] == :buy_now ? 'buy.gif' : 'checkout.gif'
       opts.delete :size
