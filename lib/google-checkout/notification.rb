@@ -21,7 +21,7 @@ module GoogleCheckout
 
     # The Nokogiri XML document received from Google.
     def doc
-      @doc || Nokogiri::XML::Builder.new
+      @doc ||= Nokogiri::XML::Builder.new
     end
 
     ##
@@ -80,10 +80,10 @@ module GoogleCheckout
     # Please see the Order States section for more information about these states.
 
     def state
-      if (@doc.at 'financial-order-state')
-        return (@doc/'financial-order-state').inner_html
-      elsif (@doc.at 'new-financial-order-state')
-        return (@doc/'new-financial-order-state').inner_html
+      if (doc.at 'financial-order-state')
+        return (doc/'financial-order-state').inner_html
+      elsif (doc.at 'new-financial-order-state')
+        return (doc/'new-financial-order-state').inner_html
       end
     end
 
@@ -131,7 +131,7 @@ module GoogleCheckout
 
     def method_missing(method_name, *args)
       element_name = method_name.to_s.gsub(/_/, '-')
-      if element = (@doc.at element_name)
+      if element = (doc.at element_name)
         if element.respond_to?(:inner_html)
           return element.inner_html
         end
@@ -146,11 +146,11 @@ module GoogleCheckout
   class ChargeAmountNotification < Notification
 
     def latest_charge_amount
-      (@doc/"latest-charge-amount").to_money
+      (doc/"latest-charge-amount").to_money
     end
 
     def total_charge_amount
-      (@doc/"total-charge-amount").to_money
+      (doc/"total-charge-amount").to_money
     end
 
   end
@@ -158,11 +158,11 @@ module GoogleCheckout
   class ChargebackAmountNotification < Notification
 
     def latest_chargeback_amount
-      (@doc/"latest-chargeback-amount").to_money
+      (doc/"latest-chargeback-amount").to_money
     end
 
     def total_chargeback_amount
-      (@doc/"total-chargeback-amount").to_money
+      (doc/"total-chargeback-amount").to_money
     end
 
   end
@@ -173,161 +173,161 @@ module GoogleCheckout
     # Returns a Money object representing the total price of the order.
     
     def order_total
-      (@doc/"order-total").to_money
+      (doc/"order-total").to_money
     end
 
     ##
     # Returns a Money object representing the total tax added.
     
     def total_tax
-      (@doc/"total-tax").to_money
+      (doc/"total-tax").to_money
     end
 
     ##
     # Returns true if the buyer wants to received marketing emails.
     
     def email_allowed
-      (@doc/"buyer-marketing-preferences"/"email-allowed").to_boolean
+      (doc/"buyer-marketing-preferences"/"email-allowed").to_boolean
     end
 
     ##
     # Returns billing name.
 
     def billing_name
-      (@doc/"buyer-billing-address"/"contact-name").inner_html
+      (doc/"buyer-billing-address"/"contact-name").inner_html
     end
 
     ##
     # Returns billing email
 
     def billing_email
-      (@doc/"buyer-billing-address"/"email").inner_html
+      (doc/"buyer-billing-address"/"email").inner_html
     end
 
     ##
     # Returns billing address1
 
     def billing_address1
-      (@doc/"buyer-billing-address"/"address1").inner_html
+      (doc/"buyer-billing-address"/"address1").inner_html
     end
 
     ##
     # Returns billing city
 
     def billing_city
-      (@doc/"buyer-billing-address"/"city").inner_html
+      (doc/"buyer-billing-address"/"city").inner_html
     end
 
     ##
     # Returns billing region
 
     def billing_region
-      (@doc/"buyer-billing-address"/"region").inner_html
+      (doc/"buyer-billing-address"/"region").inner_html
     end
 
     ##
     # Returns billing postal code
 
     def billing_postal_code
-      (@doc/"buyer-billing-address"/"postal-code").inner_html
+      (doc/"buyer-billing-address"/"postal-code").inner_html
     end
 
     ##
     # Returns billing country code
 
     def billing_country_code
-      (@doc/"buyer-billing-address"/"country-code").inner_html
+      (doc/"buyer-billing-address"/"country-code").inner_html
     end
 
     ##
     # Returns billing phone
 
     def billing_phone
-      (@doc/"buyer-billing-address"/"phone").inner_html
+      (doc/"buyer-billing-address"/"phone").inner_html
     end
 
     ##
     # Returns billing first name
 
     def billing_first_name
-      (@doc/"buyer-billing-address"/"structured-name"/"first-name").inner_html
+      (doc/"buyer-billing-address"/"structured-name"/"first-name").inner_html
     end
 
     ##
     # Returns billing last name
 
     def billing_last_name
-      (@doc/"buyer-billing-address"/"structured-name"/"last-name").inner_html
+      (doc/"buyer-billing-address"/"structured-name"/"last-name").inner_html
     end
 
     ##
     # Returns shipping contact name
 
     def shipping_name
-      (@doc/"buyer-shipping-address"/"contact-name").inner_html
+      (doc/"buyer-shipping-address"/"contact-name").inner_html
     end
 
     ##
     # Returns shipping email
 
     def shipping_email
-      (@doc/"buyer-shipping-address"/"email").inner_html
+      (doc/"buyer-shipping-address"/"email").inner_html
     end
 
     ##
     # Returns shipping address1
 
     def shipping_address1
-      (@doc/"buyer-shipping-address"/"address1").inner_html
+      (doc/"buyer-shipping-address"/"address1").inner_html
     end
 
     ##
     # Returns shipping city
 
     def shipping_city
-      (@doc/"buyer-shipping-address"/"city").inner_html
+      (doc/"buyer-shipping-address"/"city").inner_html
     end
 
     ##
     # Returns shipping region
 
     def shipping_region
-      (@doc/"buyer-shipping-address"/"region").inner_html
+      (doc/"buyer-shipping-address"/"region").inner_html
     end
 
     ##
     # Returns shipping postal code
 
     def shipping_postal_code
-      (@doc/"buyer-shipping-address"/"postal-code").inner_html
+      (doc/"buyer-shipping-address"/"postal-code").inner_html
     end
 
     ##
     # Returns shipping country code
 
     def shipping_country_code
-      (@doc/"buyer-shipping-address"/"country-code").inner_html
+      (doc/"buyer-shipping-address"/"country-code").inner_html
     end
 
     ##
     # Returns shipping phone
 
     def shipping_phone
-      (@doc/"buyer-shipping-address"/"phone").inner_html
+      (doc/"buyer-shipping-address"/"phone").inner_html
     end
 
     ##
     # Returns shipping first name
 
     def shipping_first_name
-      (@doc/"buyer-shipping-address"/"structured-name"/"first-name").inner_html
+      (doc/"buyer-shipping-address"/"structured-name"/"first-name").inner_html
     end
 
     ##
     # Returns shipping last name
 
     def shipping_last_name
-      (@doc/"buyer-shipping-address"/"structured-name"/"last-name").inner_html
+      (doc/"buyer-shipping-address"/"structured-name"/"last-name").inner_html
     end
 
   end
@@ -346,7 +346,7 @@ module GoogleCheckout
     # Returns redirect-url with ampersands escaped, as specified by Google API docs.
 
     def redirect_url
-      (@doc/"redirect-url").inner_html.gsub(/&amp;/, '&')
+      (doc/"redirect-url").inner_html.gsub(/&amp;/, '&')
     end
 
   end    
@@ -359,7 +359,7 @@ module GoogleCheckout
     end
 
     def error_message
-      @error_message || (@doc/'error-message').inner_html
+      @error_message || (doc/'error-message').inner_html
     end
     alias :message :error_message
 
